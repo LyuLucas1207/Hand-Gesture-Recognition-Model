@@ -65,13 +65,4 @@ def write_images(cap, start_num, data_size, DATA_DIR, folder):
         cv2.imwrite(path, frame)
         counter += 1
 
-if __name__ == '__main__':
-    folder_path = './data'
-    max_folder_number, folder_list = get_max_list_folder(folder_path)
-    print("最大数字文件夹名为:", max_folder_number)
-    print("文件夹列表:", folder_list)
 
-    folder_path = './data/0'
-    max_image_number, image_list = get_max_list_image(folder_path)
-    print("最大数字图片名为:", max_image_number)
-    print("图片列表:", image_list)

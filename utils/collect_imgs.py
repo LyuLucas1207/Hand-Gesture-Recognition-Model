@@ -3,8 +3,8 @@ import cv2
 
 import utils.filetools as fts
 
-def collect_imgs (number_of_classes = [0, 1, 2], dataset_size=100):
-    DATA_DIR = fts.create_dir('./data')
+def collect_imgs(number_of_classes = [0, 1, 2], dataset_size=100, data_dir='./data'):
+    DATA_DIR = fts.create_dir(data_dir)
 
     cap = cv2.VideoCapture(0) #! Change this to 0 if you are using a webcam
     for folder in number_of_classes:
@@ -22,6 +22,4 @@ def collect_imgs (number_of_classes = [0, 1, 2], dataset_size=100):
     cv2.destroyAllWindows() # Close all OpenCV windows
 
 
-if __name__ == '__main__':
-    collect_imgs([0, 1, 2])
 

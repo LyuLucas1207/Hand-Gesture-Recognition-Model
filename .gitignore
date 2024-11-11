@@ -1,7 +1,0 @@
-# Ignore all content in /images, but keep the folder
-/images/*
-!/images/.gitkeep
-
-# Ignore all content in /test/images, but keep the folder
-/test/images/*
-!/test/images/.gitkeep

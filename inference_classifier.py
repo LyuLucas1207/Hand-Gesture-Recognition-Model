@@ -3,8 +3,9 @@ import pickle
 import cv2
 import mediapipe as mp
 import numpy as np
+import enums.labels_dict as ld
 
-model_dict = pickle.load(open('./model.p', 'rb'))
+model_dict = pickle.load(open('./models/random_forest_model.p', 'rb'))
 model = model_dict['model']
 
 cap = cv2.VideoCapture(2)
@@ -15,7 +16,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
-labels_dict = {0: 'A', 1: 'B', 2: 'L'}
+labels_dict = ld.labels_dict
 while True:
 
     data_aux = []

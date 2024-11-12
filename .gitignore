@@ -4,3 +4,5 @@
 # Ignore all content in /test/images, but keep the folder
 /test/images/
 
+# Ignore all __pycache__ directories
+**/__pycache__/

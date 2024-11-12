@@ -27,6 +27,7 @@ def create_dir(dir_):
     Returns:
     str: The path of the created or existing directory.
     """
+
     if not os.path.exists(dir_):
         os.makedirs(dir_)
     return dir_

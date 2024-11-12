@@ -1,5 +1,5 @@
 import utils.filetools as fts
-import utils.collect_imgs as ci
+import utils.videotools as ci
 
 def test_get_max_list_folder():
     folder_path = './test/images'

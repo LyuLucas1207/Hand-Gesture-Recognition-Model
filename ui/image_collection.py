@@ -1,5 +1,5 @@
 #How to run: python -m ui.image_collection
-from utils import collect_imgs as ci
+from utils import videotools as vt
 
 # Collects images from the webcam and saves them in the data directory
 
@@ -9,7 +9,7 @@ def main():
     dataset_size = 100
     #!relative path from the root directory
     data_dir = './images'
-    ci.collect_imgs(number_of_classes, dataset_size, data_dir)
+    vt.collect_imgs(number_of_classes, dataset_size, data_dir)
 
 # 运行 main() 函数
 if __name__ == "__main__":

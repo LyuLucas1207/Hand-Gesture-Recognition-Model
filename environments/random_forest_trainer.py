@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 import numpy as np
 
+import utils.modeltools as mt
+
 data_dict = pickle.load(open('./data/data.pickle', 'rb'))
 
 print(data_dict.keys()) # dict_keys(['data', 'labels'])
@@ -24,8 +26,7 @@ score = accuracy_score(y_predict, y_test)
 
 print('{}% of samples were classified correctly !'.format(score * 100))
 
-with open('./models/random_forest_model.p', 'wb') as f:
-    pickle.dump({'model': model}, f)
+mt.save_model(model, './models/random_forest_model.p')
 
 
  

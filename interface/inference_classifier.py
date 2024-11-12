@@ -1,7 +1,4 @@
-import pickle
-
 import cv2
-import mediapipe as mp
 import numpy as np
 import enums.labels_dict as ld
 import utils.modeltools as mt

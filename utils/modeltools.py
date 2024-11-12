@@ -1,3 +1,28 @@
+"""
+Machine Learning Model Persistence Utilities
+
+This module provides utility functions for saving and loading machine learning models 
+using the Python `pickle` library. These utilities ensure that models can be persistently 
+stored on disk and later retrieved for inference or further training.
+
+Functions:
+!1. save_model(model, path):
+    - Saves a machine learning model to the specified file path.
+    - If the directory does not exist, it will be created automatically using the `utils.filetools.create_dir` utility.
+
+!2. load_model(path):
+    - Loads a machine learning model from the specified file path.
+    - Returns the loaded model object and the entire dictionary containing the model.
+    
+# Save the model
+mt.save_model(model, './models/random_forest_model.p')
+
+# Load the model
+loaded_model, model_dict = mt.load_model('./models/random_forest_model.p')
+print("Model loaded successfully:", loaded_model)
+
+"""
+
 import os
 import pickle
 import utils.filetools as ft

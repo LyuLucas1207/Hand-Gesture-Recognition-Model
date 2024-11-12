@@ -6,6 +6,12 @@
 #     - Displays images from the specified directories and image numbers.
 #! 3. show_hand(dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all):
 #     - Displays hand landmarks on images from specified directories. 
+#! 4. display_image(img_rgb, title):
+#     - Display an image using Matplotlib.
+#! 5. init_hands(static_image_mode, min_detection_confidence):
+#     - Initialize MediaPipe hand detection modules.
+#! 6. draw_landmarks(img_rgb, hands, mp_hands, mp_drawing, mp_drawing_styles):
+#     - Draw hand landmarks on an image.
 #
 
 import os, cv2

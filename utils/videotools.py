@@ -5,26 +5,15 @@
 # - Visualizing hand landmarks in real-time using the MediaPipe library.
 #
 # List of Functions:
-#
-# 1. collect_imgs(number_of_classes, dataset_size, data_dir, video_source):
+#! 1. collect_imgs(number_of_classes, dataset_size, data_dir, video_source):
 #    - Collects images for specified gesture classes using a video feed.
 #    - Saves the images into class-specific folders within a base directory.
 #
-# 2. hand_depiction(static_image_mode, min_detection_confidence):
+#! 2. hand_depiction(static_image_mode, min_detection_confidence):
 #    - Captures real-time video from a camera and detects hand landmarks.
 #    - Draws hand landmarks and connections on the video feed in real-time.
 #
-# Prerequisites:
-# - OpenCV for capturing and displaying video.
-# - MediaPipe for hand landmark detection.
-# - Utility functions from `utils.filetools` and `utils.graphtools` for file handling and landmark processing.
-#
-# How to Use:
-# - Run `collect_imgs()` to collect gesture class images.
-# - Run `hand_depiction()` to visualize hand landmarks.
-#
-# How to Execute:
-# - Save this module in your project and call the functions in your script.
+
 
 import os
 import cv2

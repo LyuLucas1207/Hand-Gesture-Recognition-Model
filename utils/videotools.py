@@ -22,7 +22,9 @@ import utils.filetools as fts
 import utils.graphtools as gts
 
 
-def collect_imgs(number_of_classes=[0, 1, 2], dataset_size=100, data_dir='./images', video_source=0):
+def collect_imgs(
+    number_of_classes=[0, 1, 2], dataset_size=100, data_dir="./images", video_source=0
+):
     """
     Collects images for specified classes using a video feed.
 
@@ -45,7 +47,7 @@ def collect_imgs(number_of_classes=[0, 1, 2], dataset_size=100, data_dir='./imag
     for folder in number_of_classes:
         # Create a subfolder for each class
         IMAGE_DIR = fts.create_dir(os.path.join(DATA_DIR, str(folder)))
-        print('Collecting data for class {}'.format(folder))
+        print("Collecting data for class {}".format(folder))
 
         # Display instructions to start collecting images
         content = 'Press "S" to start collecting data for class {}'.format(folder)
@@ -53,7 +55,7 @@ def collect_imgs(number_of_classes=[0, 1, 2], dataset_size=100, data_dir='./imag
 
         # Get the maximum image number in the folder to avoid overwriting
         max_images, _ = fts.get_max_list_image(IMAGE_DIR)
-        print('Max number: {}'.format(max_images))
+        print("Max number: {}".format(max_images))
 
         # Capture and save images for the current class
         fts.write_images(cap, max_images + 1, dataset_size, DATA_DIR, folder)
@@ -79,7 +81,9 @@ def hand_depiction(static_image_mode=True, min_detection_confidence=0.5):
     cap = cv2.VideoCapture(0)
 
     # Initialize MediaPipe Hands and related utilities
-    hands, mp_hands, mp_drawing, mp_drawing_styles = gts.init_hands(static_image_mode, min_detection_confidence)
+    hands, mp_hands, mp_drawing, mp_drawing_styles = gts.init_hands(
+        static_image_mode, min_detection_confidence
+    )
 
     while True:
         # Read a frame from the video feed
@@ -92,16 +96,18 @@ def hand_depiction(static_image_mode=True, min_detection_confidence=0.5):
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         # Detect and draw hand landmarks
-        frame_rgb = gts.draw_landmarks(frame_rgb, hands, mp_hands, mp_drawing, mp_drawing_styles)
+        frame_rgb = gts.draw_landmarks(
+            frame_rgb, hands, mp_hands, mp_drawing, mp_drawing_styles
+        )
 
         # Convert back to BGR for OpenCV display
         frame_bgr = cv2.cvtColor(frame_rgb, cv2.COLOR_RGB2BGR)
 
         # Display the processed frame
-        cv2.imshow('frame', frame_bgr)
+        cv2.imshow("frame", frame_bgr)
 
         # Exit loop when the 'q' key is pressed
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord("q"):
             break
 
     # Release the video capture object

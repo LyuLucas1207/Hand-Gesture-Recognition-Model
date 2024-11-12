@@ -1,10 +1,9 @@
-
 # Hand Gesture Recognition Model - Print Utility Functions
-# 
-# This module provides utility functions for printing formatted and visually appealing messages or options in the console. 
-# It includes functions for displaying aligned key-value pairs, boxed messages, and neatly formatted options 
+#
+# This module provides utility functions for printing formatted and visually appealing messages or options in the console.
+# It includes functions for displaying aligned key-value pairs, boxed messages, and neatly formatted options
 # for user interaction.
-# 
+#
 # List of Functions:
 #! 1. print_aligned_model_config(model_config)
 #       - Prints aligned key-value pairs for a configuration dictionary.
@@ -17,6 +16,7 @@
 #
 #! 4. print_boxed_yes_no(prompt, option_1="Yes", option_2="No", width=100)
 #       -Displays a boxed yes/no prompt for user interaction.
+
 
 def print_aligned_model_config(model_config):
     """
@@ -42,6 +42,7 @@ def print_aligned_model_config(model_config):
         else:
             print(f"{key.ljust(max_key_length)}: {value}")
 
+
 def print_boxed_message(message, width=100):
     """
     Displays a centered boxed message.
@@ -52,14 +53,17 @@ def print_boxed_message(message, width=100):
 
     Example Output:
     ==================================================
-                        Message                     
+                        Message
     ==================================================
     """
     print("=" * width)
     print(f"{message.center(width)}")
     print("=" * width)
 
-def print_boxed_options(options, additional_option="Other. Exit", ifadd = True, width=100):
+
+def print_boxed_options(
+    options, additional_option="Other. Exit", ifadd=True, width=100
+):
     """
     Prints a boxed menu of numbered options.
 
@@ -84,7 +88,8 @@ def print_boxed_options(options, additional_option="Other. Exit", ifadd = True, 
     print(f"| {other_line.ljust(width - 4)}|")
     print("=" * width)
 
-def print_boxed_yes_no(prompt, option_1="Yes", option_2="No", ifadd = True, width=100):
+
+def print_boxed_yes_no(prompt, option_1="Yes", option_2="No", ifadd=True, width=100):
     """
     Displays a boxed yes/no prompt for user interaction.
 
@@ -96,7 +101,7 @@ def print_boxed_yes_no(prompt, option_1="Yes", option_2="No", ifadd = True, widt
 
     Example Output:
     ==================================================
-                        Prompt                     
+                        Prompt
     ==================================================
     | 1. Yes                                         |
     | 2. No                                          |

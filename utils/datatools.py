@@ -1,5 +1,5 @@
 # Hand Gesture Recognition Model - Data Utility Functions
-# 
+#
 # List of Functions:
 #! 1. save_hand_data(dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all, output_file):
 #     - Extract hand landmark data from images and save it to a file.
@@ -11,15 +11,16 @@ import pickle
 import mediapipe as mp
 import utils.filetools as fts
 
+
 def save_hand_data(
-    dir_path='./images',
+    dir_path="./images",
     min_dir=0,
     max_dir=1,
     dir_all=False,
     min_image=0,
     max_image=1,
     image_all=False,
-    output_file='./data/data.pickle'
+    output_file="./data/data.pickle",
 ):
     """
     Extract hand landmark data from images and save it to a file.
@@ -37,7 +38,7 @@ def save_hand_data(
     Returns:
     None
     """
-    mp_hands = mp.solutions.hands # Import the Mediapipe Hands module
+    mp_hands = mp.solutions.hands  # Import the Mediapipe Hands module
 
     # Initialize Mediapipe Hands model
     hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
@@ -46,7 +47,9 @@ def save_hand_data(
     labels = []
 
     # Get directories and images to process
-    processed_data = fts.process_directories(dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all)
+    processed_data = fts.process_directories(
+        dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all
+    )
 
     for dir_, image_paths in processed_data:
         for img_path in image_paths:
@@ -81,9 +84,8 @@ def save_hand_data(
                 labels.append(dir_)
 
     # Save data to file
-    with open(output_file, 'wb') as f:
-        pickle.dump({'data': data, 'labels': labels}, f)
+    with open(output_file, "wb") as f:
+        pickle.dump({"data": data, "labels": labels}, f)
 
     print(f"Data saved to {output_file}")
     hands.close()
-

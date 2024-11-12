@@ -1,4 +1,4 @@
-#How to run: python -m interface.simple_classifier
+# How to run: python -m interface.simple_classifier
 
 import cv2
 import numpy as np
@@ -7,15 +7,15 @@ import utils.modeltools as mt
 import utils.graphtools as gt
 import enums.labels_dict as ld
 
-SVM = ld.models_dict['svm']
-RANDOM_FOREST = ld.models_dict['random_forest']
-KNN = ld.models_dict['knn']
-SOFTMAX = ld.models_dict['softmax']
-CNN_SKLEARN = ld.models_dict['cnn_sklearn']
+SVM = ld.models_dict["svm"]
+RANDOM_FOREST = ld.models_dict["random_forest"]
+KNN = ld.models_dict["knn"]
+SOFTMAX = ld.models_dict["softmax"]
+CNN_SKLEARN = ld.models_dict["cnn_sklearn"]
 
 
 # Load the trained model
-model, _ = mt.load_model('./models/svm.p')
+model, _ = mt.load_model("./models/svm.p")
 
 # Initialize the video capture
 cap = cv2.VideoCapture(0)
@@ -24,7 +24,9 @@ if not cap.isOpened():
     exit()
 
 # Initialize MediaPipe Hands
-hands, mp_hands, mp_drawing, mp_drawing_styles = gt.init_hands(static_image_mode=True, min_detection_confidence=0.3)
+hands, mp_hands, mp_drawing, mp_drawing_styles = gt.init_hands(
+    static_image_mode=True, min_detection_confidence=0.3
+)
 
 # Load label dictionary
 labels_dict = ld.labels_dict
@@ -54,7 +56,7 @@ while True:
                 hand_landmarks,  # model output
                 mp_hands.HAND_CONNECTIONS,  # hand connections
                 mp_drawing_styles.get_default_hand_landmarks_style(),
-                mp_drawing_styles.get_default_hand_connections_style()
+                mp_drawing_styles.get_default_hand_connections_style(),
             )
 
             # Collect landmark data for this hand
@@ -85,12 +87,20 @@ while True:
 
             # Draw bounding box and label
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-            cv2.putText(frame, predicted_character, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.0, (0, 255, 0), 2,
-                        cv2.LINE_AA)
+            cv2.putText(
+                frame,
+                predicted_character,
+                (x1, y1 - 10),
+                cv2.FONT_HERSHEY_SIMPLEX,
+                1.0,
+                (0, 255, 0),
+                2,
+                cv2.LINE_AA,
+            )
 
     # Display the frame
-    cv2.imshow('frame', frame)
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    cv2.imshow("frame", frame)
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 # Release resources

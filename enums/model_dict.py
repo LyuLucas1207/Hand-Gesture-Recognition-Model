@@ -4,8 +4,20 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
 
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix, recall_score, precision_score
-from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, MaxAbsScaler, Normalizer
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    confusion_matrix,
+    recall_score,
+    precision_score,
+)
+from sklearn.preprocessing import (
+    StandardScaler,
+    MinMaxScaler,
+    RobustScaler,
+    MaxAbsScaler,
+    Normalizer,
+)
 
 
 trainer_models = {
@@ -17,10 +29,10 @@ trainer_models = {
 }
 
 trainer_kernel_functions = {
-    1: 'linear',
-    2: 'poly',
-    3: 'rbf',
-    4: 'sigmoid',
+    1: "linear",
+    2: "poly",
+    3: "rbf",
+    4: "sigmoid",
 }
 
 trainer_scalers = {
@@ -37,69 +49,69 @@ trainer_metrics = {
     3: confusion_matrix,
     4: recall_score,
     5: precision_score,
-    6: 'ALL',
+    6: "ALL",
 }
 
 RF_criterion = {
-    1: 'gini',
-    2: 'entropy',
+    1: "gini",
+    2: "entropy",
     3: "log_loss",
 }
 
 KNN_weights = {
-    1: 'uniform',
-    2: 'distance',
+    1: "uniform",
+    2: "distance",
 }
 
 KNN_algorithm = {
-    1: 'auto',
-    2: 'ball_tree',
-    3: 'kd_tree',
-    4: 'brute',
+    1: "auto",
+    2: "ball_tree",
+    3: "kd_tree",
+    4: "brute",
 }
 
 LR_penalty = {
-    1: 'l1',
-    2: 'l2',
-    3: 'elasticnet',
+    1: "l1",
+    2: "l2",
+    3: "elasticnet",
 }
 
 LR_solver = {
-    1: 'newton-cg',
-    2: 'lbfgs',
-    3: 'liblinear',
-    4: 'sag',
-    5: 'saga',
+    1: "newton-cg",
+    2: "lbfgs",
+    3: "liblinear",
+    4: "sag",
+    5: "saga",
 }
 
 SVM_kernel = {
-    1: 'linear',
-    2: 'poly',
-    3: 'rbf',
-    4: 'sigmoid',
-    5: 'precomputed',
+    1: "linear",
+    2: "poly",
+    3: "rbf",
+    4: "sigmoid",
+    5: "precomputed",
 }
 
 SVM_gamma = {
-    1: 'scale',
-    2: 'auto',
+    1: "scale",
+    2: "auto",
 }
 
 NN_activation = {
-    1: 'identity',
-    2: 'logistic',
-    3: 'tanh',
-    4: 'relu',
+    1: "identity",
+    2: "logistic",
+    3: "tanh",
+    4: "relu",
 }
 
 NN_solver = {
-    1: 'lbfgs',
-    2: 'sgd',
-    3: 'adam',
+    1: "lbfgs",
+    2: "sgd",
+    3: "adam",
 }
 
 NN_learning_rate = {
-    1: 'constant',
-    2: 'invscaling',
-    3: 'adaptive',
+    1: "constant",
+    2: "invscaling",
+    3: "adaptive",
 }

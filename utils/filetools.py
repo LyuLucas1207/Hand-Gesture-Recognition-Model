@@ -1,16 +1,16 @@
 # Hand Gesture Recognition Model - File Utility Functions
-# 
+#
 # List of Functions:
-#! 1. create_dir(dir_): 
+#! 1. create_dir(dir_):
 #     - Creates a directory if it does not exist.
 #
-#! 2. get_max_list_folder(folder_path): 
+#! 2. get_max_list_folder(folder_path):
 #     - Returns the maximum numeric folder name and a list of all folder names in a directory.
 #
-#! 3. get_max_list_image(folder_path): 
+#! 3. get_max_list_image(folder_path):
 #     - Returns the maximum numeric image file name and a list of numeric file names in a folder.
 #
-#! 4. write_images(cap, start_num, data_size, DATA_DIR, folder): 
+#! 4. write_images(cap, start_num, data_size, DATA_DIR, folder):
 #     - Captures and saves images from a video feed.
 #
 #! 5. process_directories(dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all):
@@ -18,6 +18,7 @@
 #
 
 import os, cv2
+
 
 def create_dir(dir_):
     """
@@ -33,6 +34,7 @@ def create_dir(dir_):
     if not os.path.exists(dir_):
         os.makedirs(dir_)
     return dir_
+
 
 def get_max_list_folder(folder_path):
     """
@@ -55,6 +57,7 @@ def get_max_list_folder(folder_path):
             folder_list.append(folder_name)
     return max_number, folder_list
 
+
 def get_max_list_image(folder_path):
     """
     Get the maximum numeric image file name (without extension) and a list of numeric file names in a folder.
@@ -69,16 +72,17 @@ def get_max_list_image(folder_path):
     """
     max_number = -1  # 初始化为 -1，处理空文件夹情况
     image_list = []
-    
+
     for file_name in os.listdir(folder_path):
         file_path_full = os.path.join(folder_path, file_name)
-        if os.path.isfile(file_path_full) and file_name.split('.')[0].isdigit():
-            number = int(file_name.split('.')[0])
+        if os.path.isfile(file_path_full) and file_name.split(".")[0].isdigit():
+            number = int(file_name.split(".")[0])
             max_number = max(max_number, number)
             image_list.append(number)
-    
+
     return max_number, image_list
-        
+
+
 def write_images(cap, start_num, data_size, DATA_DIR, folder):
     """
     Capture and save images from a video feed.
@@ -94,20 +98,23 @@ def write_images(cap, start_num, data_size, DATA_DIR, folder):
     None
     """
     counter = 0
-    image_name = '{}.jpg'.format
+    image_name = "{}.jpg".format
     while counter < data_size:
         path = os.path.join(DATA_DIR, str(folder), image_name(start_num + counter))
         ret, frame = cap.read()
         if ret == False or frame is None:
-            print('Camera not found')
+            print("Camera not found")
             break
 
-        cv2.imshow('frame', frame)
+        cv2.imshow("frame", frame)
         cv2.waitKey(25)
         cv2.imwrite(path, frame)
         counter += 1
 
-def process_directories(dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all):
+
+def process_directories(
+    dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all
+):
     """
     Process directories and images based on the provided range or settings.
 
@@ -126,8 +133,7 @@ def process_directories(dir_path, min_dir, max_dir, dir_all, min_image, max_imag
     # dir_list = os.listdir(dir_path)
     # sort the directories in ascending order
     dir_list = sorted(
-        [d for d in os.listdir(dir_path) if d.isdigit()],
-        key=lambda x: int(x)
+        [d for d in os.listdir(dir_path) if d.isdigit()], key=lambda x: int(x)
     )
 
     if dir_all:
@@ -151,7 +157,9 @@ def process_directories(dir_path, min_dir, max_dir, dir_all, min_image, max_imag
         image_list = image_list[min_image:max_image]
 
         # Collect directory and image data
-        processed_data.append((dir_, [os.path.join(folder_path, img) for img in image_list]))
-        
+        processed_data.append(
+            (dir_, [os.path.join(folder_path, img) for img in image_list])
+        )
+
     # print(f"Processed directory: {processed_data}")
     return processed_data

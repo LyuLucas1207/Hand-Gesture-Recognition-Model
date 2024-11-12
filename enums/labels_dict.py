@@ -7,5 +7,9 @@ labels_dict = {
 
 models_dict = {
     'svm': './models/svm_model.p',
-    'random_forest': './models/random_forest_model.p'
+    'random_forest': './models/random_forest_model.p',
+    'knn': './models/knn_model.p',
+    'softmax': './models/softmax_model.p',
+    'cnn_sklearn': './models/cnn_sklearn.p',
+    'cnn_tensorflow': './models/cnn_tensorflow.h5',
 }

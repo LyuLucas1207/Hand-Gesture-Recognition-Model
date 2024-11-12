@@ -52,43 +52,59 @@ This model aims to offer a reliable, efficient solution for hand gesture recogni
 # Project Structure
 
 ```bash
-├── data/                          # Contains data files used in the project
-│   └── data.pickle                # Serialized data file
-├── enums/                         # Enumerations and constants
-│   ├── __init__.py                # Initialization file for the module
-│   └── labels_dict.py             # Dictionary for mapping labels to gestures
-├── environments/                  # Model training environments
-│   ├── __init__.py                # Initialization file for the module
-│   ├── random_forest_trainer.py   # Script to train the random forest model
-│   └── may_have_more_model.py
-├── images/                        # Directory to store images
-├── interface/                     # Interface for inference
-│   ├── __init__.py                # Initialization file for the module
-│   └── simple_classifier.py       # Script to classify gestures using the trained model
-├── models/                        # Directory to store pre-trained models
-│   └── random_forest_model.p      # Pre-trained random forest model file
-├── test/                          # Testing-related scripts and resources
-│   ├── __init__.py                # Initialization file for the module
-│   ├── images/                    # Test image directory
-│   └── testfiletools.py           # Test cases for file utilities
-├── ui/                            # User interface and data collection modules
-│   ├── __init__.py                # Initialization file for the module
-│   ├── image_collection.py        # Script to collect gesture images
-│   ├── image_depiction.py         # Script to depict hand gestures
-│   ├── image_process.py           # Script for processing images
-│   └── image_showing.py           # Script for displaying images
-├── utils/                         # Utility modules for various tasks
-│   ├── __init__.py                # Initialization file for the module
-│   ├── datatools.py               # Utilities for data-related operations
-│   ├── filetools.py               # Utilities for file and directory operations
-│   ├── graphtools.py              # Graph and visualization utilities
-│   ├── modeltools.py              # Tools for saving and loading models
-│   └── videotools.py              # Video processing utilities
-├── .gitignore                     # Specifies intentionally untracked files to ignore
-├── Hand.png                       # Example image of a hand gesture
-├── License                        # Project license file
-├── README.md                      # Project documentation file
-├── requirements.txt               # Python dependencies for the project
+.   
+├── .vscode/                            # VSCode configuration files directory
+├── classes/                            # Model builder classes
+│   ├── KNearestNeighborsBuilder.py     # Configuration builder for K-Nearest Neighbors (KNN) model
+│   ├── LogisticRegressionBuilder.py    # Configuration builder for Logistic Regression model
+│   ├── ModelTrainerBuilder.py          # Generic model trainer configuration builder
+│   ├── RandomForestBuilder.py          # Configuration builder for Random Forest model
+│   ├── SklearnNeuralNetworkBuilder.py  # Configuration builder for Neural Network (MLPClassifier) model
+│   ├── SupportVectorMachineBuilder.py  # Configuration builder for Support Vector Machine (SVM) model
+│   └── __pycache__/                    # Compiled Python cache files
+├── data/                               # Data storage directory
+│   └── data.pickle                     # Example dataset in pickle format
+├── enums/                              # Enumerations and mappings
+│   ├── labels_dict.py                  # Dictionary mapping for labels
+│   ├── model_dict.py                   # Dictionary mapping for model selection
+│   ├── __init__.py                     # Initialization module for enums package
+│   └── __pycache__/                    # Compiled Python cache files
+├── environments/                       # Training environments and workflows
+│   ├── cnn_tensorflow_trainer.py       # TensorFlow CNN training workflow script
+│   ├── simple_trainer.py               # A simple training workflow
+│   ├── __init__.py                     # Initialization module for environments package
+│   └── __pycache__/                    # Compiled Python cache files
+├── images/                             # Directory for storing image resources
+├── interface/                          # Interface layer scripts
+│   ├── simple_classifier.py            # A simple classification interface
+│   ├── __init__.py                     # Initialization module for interface package
+│   └── __pycache__/                    # Compiled Python cache files
+├── models/                             # Trained models storage
+│   ├── svm.p                           # Serialized Support Vector Machine (SVM) model
+├── output/                             # Output results directory
+│   └── svm.txt                         # Results file for SVM model evaluation
+├── test/                               # Test scripts directory
+├── ui/                                 # User interface modules
+│   ├── image_collection.py             # Module for collecting images
+│   ├── image_depiction.py              # Module for describing images
+│   ├── image_process.py                # Module for image processing
+│   ├── image_showing.py                # Module for displaying images
+│   ├── __init__.py                     # Initialization module for UI package
+│   └── __pycache__/                    # Compiled Python cache files
+├── utils/                              # Utility scripts
+│   ├── datatools.py                    # Tools for data handling
+│   ├── filetools.py                    # Tools for file operations
+│   ├── graphtools.py                   # Tools for creating graphs and visualizations
+│   ├── modeltools.py                   # Tools for model handling and utilities
+│   ├── printtools.py                   # Tools for formatted console printing
+│   ├── videotools.py                   # Tools for video processing
+│   ├── __init__.py                     # Initialization module for utils package
+│   └── __pycache__/                    # Compiled Python cache files
+├── .gitignore                          # Git ignore file for excluding unwanted files
+├── Hand.png                            # Example image file
+├── License                             # Project license
+├── README.md                           # Project documentation
+└── requirements.txt                    # Python package dependencies
 ```
 
 # Executable Files
@@ -129,8 +145,8 @@ python -m interface.simple_classifier
 
 ## Model Training Environment (environments/)
 
-### Train Random Forest Model
+### Train Simple Model
 
 ```bash
-python -m environments.random_forest_trainer
+python -m environments.simple_trainer
 ```

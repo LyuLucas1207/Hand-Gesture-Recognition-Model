@@ -3,17 +3,19 @@
 # List of Functions:
 #! 1. create_dir(dir_): 
 #     - Creates a directory if it does not exist.
-#     
+#
 #! 2. get_max_list_folder(folder_path): 
 #     - Returns the maximum numeric folder name and a list of all folder names in a directory.
-# 
+#
 #! 3. get_max_list_image(folder_path): 
 #     - Returns the maximum numeric image file name and a list of numeric file names in a folder.
-# 
+#
 #! 4. write_images(cap, start_num, data_size, DATA_DIR, folder): 
 #     - Captures and saves images from a video feed.
+#
 #! 5. process_directories(dir_path, min_dir, max_dir, dir_all, min_image, max_image, image_all):
 #     - Processes directories and images based on the provided range or settings.
+#
 
 import os, cv2
 

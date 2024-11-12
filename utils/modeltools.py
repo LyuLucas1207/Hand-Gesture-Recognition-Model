@@ -1,27 +1,25 @@
-"""
-Machine Learning Model Persistence Utilities
+# Hand Gesture Recognition Model - Print Utility Functions
+#
+# This module provides utility functions for saving and loading machine learning models 
+# using the Python `pickle` library. These utilities ensure that models can be persistently 
+# stored on disk and later retrieved for inference or further training.
+# 
+# Functions:
+# !1. save_model(model, path):
+#     - Saves a machine learning model to the specified file path.
+#     - If the directory does not exist, it will be created automatically using the `utils.filetools.create_dir` utility.
+# 
+# !2. load_model(path):
+#     - Loads a machine learning model from the specified file path.
+#     - Returns the loaded model object and the entire dictionary containing the model.
+#     
+# # Save the model
+# mt.save_model(model, './models/random_forest_model.p')
+# 
+# # Load the model
+# loaded_model, model_dict = mt.load_model('./models/random_forest_model.p')
+# print("Model loaded successfully:", loaded_model)
 
-This module provides utility functions for saving and loading machine learning models 
-using the Python `pickle` library. These utilities ensure that models can be persistently 
-stored on disk and later retrieved for inference or further training.
-
-Functions:
-!1. save_model(model, path):
-    - Saves a machine learning model to the specified file path.
-    - If the directory does not exist, it will be created automatically using the `utils.filetools.create_dir` utility.
-
-!2. load_model(path):
-    - Loads a machine learning model from the specified file path.
-    - Returns the loaded model object and the entire dictionary containing the model.
-    
-# Save the model
-mt.save_model(model, './models/random_forest_model.p')
-
-# Load the model
-loaded_model, model_dict = mt.load_model('./models/random_forest_model.p')
-print("Model loaded successfully:", loaded_model)
-
-"""
 
 import os
 import pickle
@@ -66,3 +64,34 @@ def load_model(path):
         model = model_dict['model']
 
     return model, model_dict
+
+def save_metrics(metrics, metrics_path):
+        """
+        保存评估指标到一个txt文件。
+
+        Parameters:
+        metrics (dict): 包含评估指标的字典，键是指标名称，值是对应的数值或矩阵。
+        metrics_path (str): 保存文件的路径，必须是.txt文件。
+
+        Example:
+        metrics = {
+            'Accuracy': 0.95,
+            'F1 Score': 0.90,
+            'Recall': 0.88,
+            'Precision': 0.92,
+            'Confusion Matrix': [[50, 5], [3, 42]]
+        }
+        """
+        # 确保父目录存在
+        os.makedirs(os.path.dirname(metrics_path), exist_ok=True)
+
+        with open(metrics_path, 'w') as file:
+            for metric, value in metrics.items():
+                file.write(f"{metric}: ")
+                if isinstance(value, (list, tuple)):
+                    file.write("\n")
+                    for row in value:
+                        file.write("  " + " ".join(map(str, row)) + "\n")
+                else:
+                    file.write(f"{value}\n")
+        print(f"Metrics saved to {metrics_path}")

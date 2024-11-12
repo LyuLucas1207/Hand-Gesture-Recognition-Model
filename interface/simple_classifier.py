@@ -1,4 +1,4 @@
-#How to run: python -m ui.image_process
+#How to run: python -m interface.simple_classifier
 
 import cv2
 import numpy as np
@@ -9,13 +9,19 @@ import enums.labels_dict as ld
 
 SVM = ld.models_dict['svm']
 RANDOM_FOREST = ld.models_dict['random_forest']
+KNN = ld.models_dict['knn']
+SOFTMAX = ld.models_dict['softmax']
+CNN_SKLEARN = ld.models_dict['cnn_sklearn']
+
 
 # Load the trained model
-# model, _ = mt.load_model(RANDOM_FOREST)
-model, _ = mt.load_model(SVM)
+model, _ = mt.load_model('./models/svm.p')
 
 # Initialize the video capture
 cap = cv2.VideoCapture(0)
+if not cap.isOpened():
+    print("Camera initialization failed.")
+    exit()
 
 # Initialize MediaPipe Hands
 hands, mp_hands, mp_drawing, mp_drawing_styles = gt.init_hands(static_image_mode=True, min_detection_confidence=0.3)

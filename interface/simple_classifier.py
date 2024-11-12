@@ -1,12 +1,18 @@
+#How to run: python -m ui.image_process
+
 import cv2
 import numpy as np
 import enums.labels_dict as ld
 import utils.modeltools as mt
 import utils.graphtools as gt
+import enums.labels_dict as ld
 
+SVM = ld.models_dict['svm']
+RANDOM_FOREST = ld.models_dict['random_forest']
 
 # Load the trained model
-model, _ = mt.load_model('./models/random_forest_model.p')
+# model, _ = mt.load_model(RANDOM_FOREST)
+model, _ = mt.load_model(SVM)
 
 # Initialize the video capture
 cap = cv2.VideoCapture(0)

@@ -64,7 +64,7 @@ This model aims to offer a reliable, efficient solution for hand gesture recogni
 ├── images/                        # Directory to store images
 ├── interface/                     # Interface for inference
 │   ├── __init__.py                # Initialization file for the module
-│   └── inference_classifier.py    # Script to classify gestures using the trained model
+│   └── simple_classifier.py       # Script to classify gestures using the trained model
 ├── models/                        # Directory to store pre-trained models
 │   └── random_forest_model.p      # Pre-trained random forest model file
 ├── test/                          # Testing-related scripts and resources
@@ -124,7 +124,7 @@ python -m ui.image_showing
 ### Run Gesture Classifier
 
 ```bash
-python -m interface.inference_classifier
+python -m interface.simple_classifier
 ```
 
 ## Model Training Environment (environments/)

@@ -4,3 +4,8 @@ labels_dict = {
     20: 'U', 21: 'V', 22: 'W', 23: 'X', 24: 'Y', 25: 'Z',
     26: '0', 27: '1', 28: '2', 29: '3', 30: '4', 31: '5', 32: '6', 33: '7', 34: '8', 35: '9'
 }
+
+models_dict = {
+    'svm': './models/svm_model.p',
+    'random_forest': './models/random_forest_model.p'
+}

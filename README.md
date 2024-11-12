@@ -1,5 +1,5 @@
 
-# CPEN355 Final Project -- Hand Gesture Recognition Model
+# Hand Gesture Recognition Model
 
 ## Project Overview
 

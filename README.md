@@ -150,3 +150,17 @@ python -m interface.simple_classifier
 ```bash
 python -m environments.simple_trainer
 ```
+
+### when you run this above line, you will see
+
+![Model Selection Panel](modelSelection.png)
+
+### when you run continue
+
+![Process](process.png)
+
+## pip install
+
+```bash
+pip install opencv-python mediapipe scikit-learn
+```

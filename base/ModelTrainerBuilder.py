@@ -3,11 +3,11 @@ import sys, os
 from enums.model_dict import trainer_models, trainer_scalers, trainer_metrics
 import utils.filetools as ft
 import utils.printtools as pt
-from classes.SupportVectorMachineBuilder import create_SVM_trainer
-from classes.RandomForestBuilder import create_RF_trainer
-from classes.KNearestNeighborsBuilder import create_KNN_trainer
-from classes.LogisticRegressionBuilder import create_LR_trainer
-from classes.SklearnNeuralNetworkBuilder import create_NN_trainer
+from base.SupportVectorMachineBuilder import create_SVM_trainer
+from base.RandomForestBuilder import create_RF_trainer
+from base.KNearestNeighborsBuilder import create_KNN_trainer
+from base.LogisticRegressionBuilder import create_LR_trainer
+from base.SklearnNeuralNetworkBuilder import create_NN_trainer
 
 
 class ModelTrainerBuilder:

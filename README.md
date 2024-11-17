@@ -54,6 +54,7 @@ This model aims to offer a reliable, efficient solution for hand gesture recogni
 ```bash
 .   
 ├── .vscode/                            # VSCode configuration files directory
+├── core/                               # Complex Model Build
 ├── base/                               # Basic Model Build
 │   ├── KNearestNeighborsBuilder.py     # Configuration builder for K-Nearest Neighbors (KNN) model
 │   ├── LogisticRegressionBuilder.py    # Configuration builder for Logistic Regression model
@@ -63,6 +64,7 @@ This model aims to offer a reliable, efficient solution for hand gesture recogni
 │   ├── SupportVectorMachineBuilder.py  # Configuration builder for Support Vector Machine (SVM) model
 │   └── __pycache__/                    # Compiled Python cache files
 ├── data/                               # Data storage directory
+│   ├── images/                         # crop images data for NN
 │   └── data.pickle                     # Example dataset in pickle format
 ├── enums/                              # Enumerations and mappings
 │   ├── labels_dict.py                  # Dictionary mapping for labels

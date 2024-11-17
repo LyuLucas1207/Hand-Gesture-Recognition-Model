@@ -137,12 +137,16 @@ def display_image(img_rgb, title):
     plt.axis("off")
 
 
-def init_hands(static_image_mode=True, min_detection_confidence=0.5):
+def init_hands(static_image_mode=True, min_detection_confidence=0.5, min_tracking_confidence=0.5):
     mp_hands = mp.solutions.hands
     mp_drawing = mp.solutions.drawing_utils
     mp_drawing_styles = mp.solutions.drawing_styles
 
-    hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.5)
+    hands = mp_hands.Hands(
+        static_image_mode=True, 
+        min_detection_confidence=0.5,
+        min_tracking_confidence=min_tracking_confidence
+        )
 
     return hands, mp_hands, mp_drawing, mp_drawing_styles
 

@@ -98,15 +98,15 @@ class CNNModel(nn.Module):
         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  
         
         # 第二层卷积 + 激活 + 池化
-        # iw/2 x ih/2 x 32 -> iw/2 x ih/2 x 64
-        self.conv2 = nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1)  
+        # iw/2 x ih/2 x oc -> iw/2 x ih/2 x (2 * oc)
+        self.conv2 = nn.Conv2d(in_channels = self.oc, out_channels = 2 * self.oc, kernel_size=3, stride=1, padding=1)
         self.relu2 = nn.Tanh()
         # iw/2 x ih/2 x 64 -> iw/4 x ih/4 x 64
         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)  
         
         # 全连接层部分
         self.flatten = nn.Flatten() # 展平, if 32x32x64 -> 65536
-        self.fc1 = nn.Linear(64 * (self.iw // 4) * (self.ih // 4), 256)  # 64 * 32 * 32 -> 256
+        self.fc1 = nn.Linear(2 * self.oc * (self.iw // 4) * (self.ih // 4), 256)  # 输入维度, 输出维度
         self.relu_fc1 = nn.Tanh()  # 激活
         self.dropout = nn.Dropout(0.5)  # Dropout
         self.fc2 = nn.Linear(256, num_classes)  # 输出类别数

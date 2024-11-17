@@ -9,3 +9,6 @@
 
 # Ignore all content in /data/images, but keep the folder
 /data/images/ 
+
+
+models/cnn_model_pytorch.pth # too big to upload

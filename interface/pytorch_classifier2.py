@@ -1,3 +1,5 @@
+# How to run: python -m interface.pytorch_classifier2
+
 import cv2
 import numpy as np
 import torch
@@ -62,9 +64,20 @@ while True:
             hand_img_resized = cv2.resize(hand_img, (128, 128))
 
             # Convert to grayscale and normalize
-            hand_img_gray = cv2.cvtColor(hand_img_resized, cv2.COLOR_BGR2GRAY)
-            hand_img_normalized = hand_img_gray / 255.0
-            hand_img_tensor = torch.tensor(hand_img_normalized, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+            # hand_img_gray = cv2.cvtColor(hand_img_resized, cv2.COLOR_BGR2GRAY)
+            # hand_img_normalized = hand_img_gray / 255.0
+            # hand_img_tensor = torch.tensor(hand_img_normalized, dtype=torch.float32).unsqueeze(0).unsqueeze(0).to(device)
+
+            # # Predict using the PyTorch model
+            # with torch.no_grad():
+            #     outputs = model(hand_img_tensor)
+            #     probabilities = softmax(outputs, dim=1).cpu().numpy()
+            #     predicted_index = np.argmax(probabilities)
+            #     predicted_character = labels_dict[predicted_index]
+
+            hand_img_rgb = cv2.cvtColor(hand_img_resized, cv2.COLOR_BGR2RGB)
+            hand_img_normalized = hand_img_rgb / 255.0
+            hand_img_tensor = torch.tensor(hand_img_normalized, dtype=torch.float32).permute(2, 0, 1).unsqueeze(0).to(device)
 
             # Predict using the PyTorch model
             with torch.no_grad():

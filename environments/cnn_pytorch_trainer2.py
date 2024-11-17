@@ -15,7 +15,7 @@ def main():
 
     # Data preprocessing and loading
     transform = transforms.Compose([
-        transforms.Grayscale(num_output_channels=1),  # 转换为灰度图
+        # transforms.Grayscale(num_output_channels=1),  # 转换为灰度图
         transforms.Resize((128, 128)),                # 保证图片尺寸一致
         transforms.ToTensor(),                        # 转换为张量
         transforms.Normalize(mean=[0.5], std=[0.5])   # 灰度图归一化，范围 [-1, 1]
@@ -31,8 +31,8 @@ def main():
 
     # Model, loss function, and optimizer
     model = CNNModel(num_classes = 36, # 26个字母 + 10个数字
-                     in_channels = 1, 
-                     out_channels = 32, 
+                     in_channels = 3, 
+                     out_channels = 64, 
                      image_width = 128, 
                      image_height = 128
                      )

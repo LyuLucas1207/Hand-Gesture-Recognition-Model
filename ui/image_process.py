@@ -1,3 +1,5 @@
+# How to run: python -m ui.image_process
+
 from utils import datatools as dt
 from utils.printtools import print_boxed_message, print_boxed_options
 

@@ -54,7 +54,7 @@ This model aims to offer a reliable, efficient solution for hand gesture recogni
 ```bash
 .   
 ├── .vscode/                            # VSCode configuration files directory
-├── classes/                            # Model builder classes
+├── base/                               # Basic Model Build
 │   ├── KNearestNeighborsBuilder.py     # Configuration builder for K-Nearest Neighbors (KNN) model
 │   ├── LogisticRegressionBuilder.py    # Configuration builder for Logistic Regression model
 │   ├── ModelTrainerBuilder.py          # Generic model trainer configuration builder

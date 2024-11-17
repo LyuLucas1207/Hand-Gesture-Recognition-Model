@@ -13,7 +13,7 @@ from sklearn.metrics import (
 )
 
 import utils.modeltools as mt
-from classes.ModelTrainerBuilder import create_model_trainer
+from base.ModelTrainerBuilder import create_model_trainer
 from enums.model_dict import trainer_models
 
 

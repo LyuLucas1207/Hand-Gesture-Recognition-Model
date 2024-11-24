@@ -2,6 +2,7 @@ import sys, os
 import utils.printtools as pt
 from enums.model_dict import KNN_weights, KNN_algorithm
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import GridSearchCV
 
 
 class KNearestNeighborsBuilder:

@@ -11,6 +11,8 @@ from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from sklearn.metrics import classification_report
+import numpy as np
 
 # Load the data
 data_dict = pickle.load(open("./data/data.pickle", "rb"))
@@ -88,6 +90,16 @@ history = model.fit(
 # Evaluate model
 loss, accuracy = model.evaluate(x_test, y_test, verbose=0)
 print(f"Final Model Accuracy: {accuracy * 100:.2f}%")
+
+# Generate predictions
+y_pred = model.predict(x_test)
+y_pred_classes = np.argmax(y_pred, axis=1)
+y_test_classes = np.argmax(y_test, axis=1)
+
+# Calculate precision, recall, and F1-score
+report = classification_report(y_test_classes, y_pred_classes, target_names=[f"Class {i}" for i in range(labels.shape[1])])
+print("\nClassification Report:")
+print(report)
 
 # Save the model
 model.save("./models/cnn_advanced.h5")

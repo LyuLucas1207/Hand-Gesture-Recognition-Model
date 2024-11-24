@@ -1,3 +1,4 @@
+# How to run: python -m environments.simple_trainer        
 import pickle, sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -74,17 +75,24 @@ def trainer():
 
 def model_select(model_config):
     trainer_model = model_config["trainer_model"]
+    print(f"Selected model: {trainer_model}")
+    print(f"Available models: {trainer_models[1]}")
+    print(f"Available models: {trainer_models[2]}")
+    print(f"Available models: {trainer_models[3]}")
+    print(f"Available models: {trainer_models[4]}")
+    print(f"Available models: {trainer_models[5]}")
     if trainer_model == trainer_models[1]:
-        model = model_config["specific_model"]["model"]
-    if trainer_model == trainer_models[2]:
-        model = model_config["specific_model"]["model"]
-    if trainer_model == trainer_models[3]:
-        model = model_config["specific_model"]["model"]
-    if trainer_model == trainer_models[4]:
-        model = model_config["specific_model"]["model"]
+        return model_config["specific_model"]["model"]
+    elif trainer_model == trainer_models[2]:
+        return model_config["specific_model"]["model"]
+    elif trainer_model == trainer_models[3]:
+        return model_config["specific_model"]["model"]
+    elif trainer_model == trainer_models[4]:
+        return model_config["specific_model"]["model"]
+    elif trainer_model == trainer_models[5]:
+        return model_config["specific_model"]["model"]
     else:
         sys.exit("Program exited due to invalid model selection.")
-    return model
 
 
 if __name__ == "__main__":

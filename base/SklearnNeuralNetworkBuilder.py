@@ -163,7 +163,7 @@ class SklearnNeuralNetworkBuilder:
         return self
 
     def build(self):
-        # 返回配置好的神经网络配置
+        self.set_sklearn_NN_model()
         return self.__NN_config
 
 

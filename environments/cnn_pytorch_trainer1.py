@@ -1,3 +1,4 @@
+# How to run this code: python -m environments.cnn_pytorch_trainer1
 import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -5,6 +6,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
+from sklearn.metrics import classification_report
 
 # 加载手部关键点数据
 with open("./data/data.pickle", "rb") as f:
@@ -94,7 +96,7 @@ model = CNNModel(num_classes=num_classes).to(device)
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.CrossEntropyLoss()
 
-# 模型训练
+## 模型训练
 epochs = 50
 for epoch in range(epochs):
     model.train()
@@ -117,6 +119,8 @@ for epoch in range(epochs):
     model.eval()
     val_loss = 0.0
     val_accuracy = 0.0
+    all_preds = []
+    all_targets = []
     with torch.no_grad():
         for inputs, targets in test_loader:
             inputs, targets = inputs.to(device), targets.to(device)
@@ -127,22 +131,38 @@ for epoch in range(epochs):
             preds = outputs.argmax(dim=1)
             val_accuracy += (preds == targets.argmax(dim=1)).float().mean().item()
 
-    # 打印训练和验证结果
+            all_preds.extend(preds.cpu().numpy())
+            all_targets.extend(targets.argmax(dim=1).cpu().numpy())
+
+    # 计算分类报告
+    report = classification_report(all_targets, all_preds, target_names=[f"Class {i}" for i in range(num_classes)], zero_division=0)
     print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_loss/len(train_loader):.4f}, "
           f"Val Loss: {val_loss/len(test_loader):.4f}, Val Accuracy: {val_accuracy/len(test_loader):.4f}")
+    print(report)
 
 # 测试模型
 model.eval()
 test_accuracy = 0.0
+all_preds = []
+all_targets = []
 with torch.no_grad():
     for inputs, targets in test_loader:
         inputs, targets = inputs.to(device), targets.to(device)
         outputs = model(inputs)
         preds = outputs.argmax(dim=1)
+
         test_accuracy += (preds == targets.argmax(dim=1)).float().mean().item()
+
+        all_preds.extend(preds.cpu().numpy())
+        all_targets.extend(targets.argmax(dim=1).cpu().numpy())
 
 test_accuracy /= len(test_loader)
 print(f"Final Model Accuracy: {test_accuracy * 100:.2f}%")
+
+# 打印最终分类报告
+final_report = classification_report(all_targets, all_preds, target_names=[f"Class {i}" for i in range(num_classes)], zero_division=0)
+print("Final Classification Report:")
+print(final_report)
 
 # 保存模型
 torch.save(model.state_dict(), "./models/cnn_advanced.pth")
@@ -151,4 +171,3 @@ print("Model saved as ./models/cnn_advanced.pth")
 # 保存完整模型（包括结构和权重）
 torch.save(model, "./models/cnn_advanced_complete.pth")
 print("Model saved as ./models/cnn_advanced_complete.pth")
-

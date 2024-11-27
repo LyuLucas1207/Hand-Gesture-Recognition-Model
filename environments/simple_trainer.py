@@ -1,9 +1,12 @@
-# How to run: python -m environments.simple_trainer        
+# How to run: python -m environments.simple_trainer
+# 
+#   
 import pickle, sys
 import numpy as np
 import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 from sklearn.pipeline import Pipeline, make_pipeline
 from sklearn.metrics import (
     accuracy_score,
@@ -27,6 +30,7 @@ def trainer():
     labels = np.asarray(data_dict["labels"])
 
     test_size = model_config["test_size"] if "test_size" in model_config else 0.2
+    cv_folds = model_config.get("cv_folds", 10)  # Number of cross-validation folds
 
     x_train, x_test, y_train, y_test = train_test_split(
         data, labels, test_size=test_size, shuffle=True, stratify=labels
@@ -51,6 +55,10 @@ def trainer():
     print(f"Training {model}...")
     model.fit(x_train, y_train)
 
+    cv_scores = cross_val_score(model, x_train, y_train, cv=cv_folds, scoring="accuracy")
+    print(f"Cross-validation scores: {cv_scores}")
+    print(f"Average cross-validation score: {cv_scores.mean():.4f}")
+
     y_predict = model.predict(x_test)
 
     if model_config["trainer_metric"] == "ALL":
@@ -59,6 +67,7 @@ def trainer():
             "F1 Score": f1_score(y_test, y_predict, average="weighted"),
             "Recall": recall_score(y_test, y_predict, average="weighted"),
             "Precision": precision_score(y_test, y_predict, average="weighted"),
+            "Average Cross-Validation Score": cv_scores.mean(),
             "Confusion Matrix": confusion_matrix(y_test, y_predict).tolist(),
         }
         for metric, value in metrics.items():

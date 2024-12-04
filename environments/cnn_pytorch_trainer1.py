@@ -7,6 +7,7 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.metrics import classification_report
+import matplotlib.pyplot as plt
 
 # 加载手部关键点数据
 with open("./data/data.pickle", "rb") as f:
@@ -14,7 +15,31 @@ with open("./data/data.pickle", "rb") as f:
 
 print(data_dict.keys())  # dict_keys(['data', 'labels'])
 
-data = np.asarray(data_dict["data"])
+print(data_dict["data"][:1])  # 打印前 5 项以查看具体内容
+print([type(sample) for sample in data_dict["data"]])  # 查看每个样本的类型
+
+lengths = [len(sample) for sample in data_dict["data"]]
+print("Sample lengths:", lengths[:10])  # 查看前 10 个样本的长度
+print("Unique lengths:", set(lengths))  # 检查所有样本长度是否一致
+
+
+def truncate_samples(data, target_length=42):
+    """
+    将所有超过 target_length 的样本截取到 target_length
+    """
+    truncated_data = []
+    for sample in data:
+        if len(sample) > target_length:
+            truncated_data.append(sample[:target_length])  # 截取前 42 个特征
+        else:
+            truncated_data.append(sample)  # 保留原始样本
+    return truncated_data
+
+# 截取数据
+data = truncate_samples(data_dict["data"], target_length=42)
+data = np.asarray(data)
+
+# data = np.asarray(data_dict["data"])
 labels = np.asarray(data_dict["labels"])
 
 print(f"Data shape: {data.shape}")
@@ -96,8 +121,11 @@ model = CNNModel(num_classes=num_classes).to(device)
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.CrossEntropyLoss()
 
+train_losses = []
+val_losses = []
+
 ## 模型训练
-epochs = 50
+epochs = 30
 for epoch in range(epochs):
     model.train()
     train_loss = 0.0
@@ -114,6 +142,8 @@ for epoch in range(epochs):
         optimizer.step()
 
         train_loss += loss.item()
+
+    train_losses.append(train_loss / len(train_loader))
 
     # 验证模型
     model.eval()
@@ -134,11 +164,28 @@ for epoch in range(epochs):
             all_preds.extend(preds.cpu().numpy())
             all_targets.extend(targets.argmax(dim=1).cpu().numpy())
 
+    val_losses.append(val_loss / len(test_loader))
+
     # 计算分类报告
     report = classification_report(all_targets, all_preds, target_names=[f"Class {i}" for i in range(num_classes)], zero_division=0)
-    print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_loss/len(train_loader):.4f}, "
-          f"Val Loss: {val_loss/len(test_loader):.4f}, Val Accuracy: {val_accuracy/len(test_loader):.4f}")
+    print(f"Epoch {epoch+1}/{epochs}, Train Loss: {train_losses[-1]:.4f}, "
+          f"Val Loss: {val_losses[-1]:.4f}, Val Accuracy: {val_accuracy/len(test_loader):.4f}")
     print(report)
+
+# 绘制损失曲线
+plt.figure(figsize=(10, 6))
+plt.plot(range(1, epochs + 1), train_losses, label="Train Loss")
+plt.plot(range(1, epochs + 1), val_losses, label="Validation Loss")
+
+plt.xticks(range(1, epochs + 1, 5))  # 每隔 5 个 epoch 设置一个刻度
+plt.yticks(np.arange(2.6, max(max(train_losses), max(val_losses)) + 0.05, 0.05))  # y 轴从 2 开始，每隔 0.1
+
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.title("Training and Validation Loss")
+plt.legend()
+plt.grid(True)
+plt.show()
 
 # 测试模型
 model.eval()

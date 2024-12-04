@@ -77,12 +77,131 @@
 
 """
 
+# import os
+# import torch
+# import torch.nn as nn
+# import matplotlib.pyplot as plt
+
+# class CNNModel(nn.Module):
+#     def __init__(self, num_classes, in_channels=3, out_channels = 32, image_width=128, image_height=128):
+#         super(CNNModel, self).__init__()
+#         self.nc = num_classes
+#         self.ic = in_channels
+#         self.oc = out_channels
+#         self.iw = image_width
+#         self.ih = image_height
+
+#         # 第一层卷积 + 激活 + 池化
+#         # iw x ih x 3 -> iw x ih x 32
+#         self.conv1 = nn.Conv2d(in_channels = self.ic, out_channels = self.oc, kernel_size=3, stride=1, padding=1)
+#         self.relu1 = nn.Tanh()
+#         # iw x ih x 32 -> iw/2 x ih/2 x 32
+#         self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  
+        
+#         # 第二层卷积 + 激活 + 池化
+#         # iw/2 x ih/2 x oc -> iw/2 x ih/2 x (2 * oc)
+#         self.conv2 = nn.Conv2d(in_channels = self.oc, out_channels = 2 * self.oc, kernel_size=3, stride=1, padding=1)
+#         self.relu2 = nn.Tanh()
+#         # iw/2 x ih/2 x 64 -> iw/4 x ih/4 x 64
+#         self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)  
+        
+#         # 全连接层部分
+#         self.flatten = nn.Flatten() # 展平, if 32x32x64 -> 65536
+#         self.fc1 = nn.Linear(2 * self.oc * (self.iw // 4) * (self.ih // 4), 256)  # 输入维度, 输出维度
+#         self.relu_fc1 = nn.Tanh()  # 激活
+#         self.dropout = nn.Dropout(0.5)  # Dropout
+#         self.fc2 = nn.Linear(256, num_classes)  # 输出类别数
+        
+#     def forward(self, x):
+#         # 第一层卷积块
+#         x = self.conv1(x)
+#         x = self.relu1(x)
+#         x = self.pool1(x)
+        
+#         # 第二层卷积块
+#         x = self.conv2(x)
+#         x = self.relu2(x)
+#         x = self.pool2(x)
+        
+#         # 全连接层
+#         x = self.flatten(x)  # 展平
+#         x = self.fc1(x)
+#         x = self.relu_fc1(x)
+#         x = self.dropout(x)
+#         x = self.fc2(x)
+        
+#         return x
+
+
+# def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs, device):
+#     model.to(device)
+#     for epoch in range(num_epochs):
+#         model.train()  # Set model to training mode
+#         running_loss = 0.0
+#         correct = 0
+#         total = 0
+
+#         for images, labels in train_loader:
+#             images, labels = images.to(device), labels.to(device)
+
+#             # Zero the parameter gradients
+#             optimizer.zero_grad()
+
+#             # Forward pass
+#             outputs = model(images)
+#             loss = criterion(outputs, labels)
+
+#             # Backward pass and optimization
+#             loss.backward()
+#             optimizer.step()
+
+#             # Statistics
+#             running_loss += loss.item()
+#             _, predicted = outputs.max(1)
+#             total += labels.size(0)
+#             correct += predicted.eq(labels).sum().item()
+
+#         # Print training statistics
+#         train_acc = 100.0 * correct / total
+#         print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {running_loss / len(train_loader):.4f}, Accuracy: {train_acc:.2f}%")
+
+#         # Validate the model
+#         validate_model(model, val_loader, criterion, device)
+
+#     print("Training completed.")
+#     return model
+
+# def validate_model(model, val_loader, criterion, device):
+#     model.eval()  # Set model to evaluation mode
+#     val_loss = 0.0
+#     correct = 0
+#     total = 0
+#     with torch.no_grad(): # Disable gradient tracking
+#         for images, labels in val_loader:
+#             images, labels = images.to(device), labels.to(device)
+
+#             # Forward pass
+#             outputs = model(images)
+#             loss = criterion(outputs, labels)
+#             val_loss += loss.item()
+
+#             # Statistics
+#             _, predicted = outputs.max(1)
+#             total += labels.size(0)
+#             correct += predicted.eq(labels).sum().item()
+
+#     val_acc = 100.0 * correct / total
+#     print(f"Validation Loss: {val_loss / len(val_loader):.4f}, Accuracy: {val_acc:.2f}%")
+#     return val_acc
+
 import os
 import torch
 import torch.nn as nn
+import matplotlib.pyplot as plt
+
 
 class CNNModel(nn.Module):
-    def __init__(self, num_classes, in_channels=3, out_channels = 32, image_width=128, image_height=128):
+    def __init__(self, num_classes, in_channels=3, out_channels=32, image_width=128, image_height=128):
         super(CNNModel, self).__init__()
         self.nc = num_classes
         self.ic = in_channels
@@ -91,51 +210,50 @@ class CNNModel(nn.Module):
         self.ih = image_height
 
         # 第一层卷积 + 激活 + 池化
-        # iw x ih x 3 -> iw x ih x 32
-        self.conv1 = nn.Conv2d(in_channels = self.ic, out_channels = self.oc, kernel_size=3, stride=1, padding=1)
+        self.conv1 = nn.Conv2d(in_channels=self.ic, out_channels=self.oc, kernel_size=3, stride=1, padding=1)
         self.relu1 = nn.Tanh()
-        # iw x ih x 32 -> iw/2 x ih/2 x 32
-        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)  
-        
+        self.pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
+
         # 第二层卷积 + 激活 + 池化
-        # iw/2 x ih/2 x oc -> iw/2 x ih/2 x (2 * oc)
-        self.conv2 = nn.Conv2d(in_channels = self.oc, out_channels = 2 * self.oc, kernel_size=3, stride=1, padding=1)
+        self.conv2 = nn.Conv2d(in_channels=self.oc, out_channels=2 * self.oc, kernel_size=3, stride=1, padding=1)
         self.relu2 = nn.Tanh()
-        # iw/2 x ih/2 x 64 -> iw/4 x ih/4 x 64
-        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)  
-        
+        self.pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
+
         # 全连接层部分
-        self.flatten = nn.Flatten() # 展平, if 32x32x64 -> 65536
-        self.fc1 = nn.Linear(2 * self.oc * (self.iw // 4) * (self.ih // 4), 256)  # 输入维度, 输出维度
-        self.relu_fc1 = nn.Tanh()  # 激活
-        self.dropout = nn.Dropout(0.5)  # Dropout
-        self.fc2 = nn.Linear(256, num_classes)  # 输出类别数
-        
+        self.flatten = nn.Flatten()
+        self.fc1 = nn.Linear(2 * self.oc * (self.iw // 4) * (self.ih // 4), 256)
+        self.relu_fc1 = nn.Tanh()
+        self.dropout = nn.Dropout(0.5)
+        self.fc2 = nn.Linear(256, num_classes)
+
     def forward(self, x):
         # 第一层卷积块
         x = self.conv1(x)
         x = self.relu1(x)
         x = self.pool1(x)
-        
+
         # 第二层卷积块
         x = self.conv2(x)
         x = self.relu2(x)
         x = self.pool2(x)
-        
+
         # 全连接层
-        x = self.flatten(x)  # 展平
+        x = self.flatten(x)
         x = self.fc1(x)
         x = self.relu_fc1(x)
         x = self.dropout(x)
         x = self.fc2(x)
-        
+
         return x
 
 
 def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs, device):
     model.to(device)
+    train_losses = []
+    val_losses = []
+
     for epoch in range(num_epochs):
-        model.train()  # Set model to training mode
+        model.train()
         running_loss = 0.0
         correct = 0
         total = 0
@@ -160,22 +278,27 @@ def train_model(model, train_loader, val_loader, criterion, optimizer, num_epoch
             total += labels.size(0)
             correct += predicted.eq(labels).sum().item()
 
-        # Print training statistics
+        train_loss = running_loss / len(train_loader)
+        train_losses.append(train_loss)
         train_acc = 100.0 * correct / total
-        print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {running_loss / len(train_loader):.4f}, Accuracy: {train_acc:.2f}%")
+        print(f"Epoch [{epoch + 1}/{num_epochs}], Train Loss: {train_loss:.4f}, Train Accuracy: {train_acc:.2f}%")
 
         # Validate the model
-        validate_model(model, val_loader, criterion, device)
+        val_loss, val_acc = validate_model(model, val_loader, criterion, device)
+        val_losses.append(val_loss)
 
+    plot_losses(train_losses, val_losses)
     print("Training completed.")
     return model
 
+
 def validate_model(model, val_loader, criterion, device):
-    model.eval()  # Set model to evaluation mode
+    model.eval()
     val_loss = 0.0
     correct = 0
     total = 0
-    with torch.no_grad(): # Disable gradient tracking
+
+    with torch.no_grad():
         for images, labels in val_loader:
             images, labels = images.to(device), labels.to(device)
 
@@ -189,7 +312,20 @@ def validate_model(model, val_loader, criterion, device):
             total += labels.size(0)
             correct += predicted.eq(labels).sum().item()
 
+    val_loss /= len(val_loader)
     val_acc = 100.0 * correct / total
-    print(f"Validation Loss: {val_loss / len(val_loader):.4f}, Accuracy: {val_acc:.2f}%")
-    return val_acc
+    print(f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_acc:.2f}%")
+    return val_loss, val_acc
 
+
+def plot_losses(train_losses, val_losses):
+    plt.figure(figsize=(10, 5))
+    plt.plot(train_losses, label="Training Loss")
+    plt.plot(val_losses, label="Validation Loss")
+    plt.xlabel("Epochs")
+    plt.ylabel("Loss")
+    plt.title("Training and Validation Loss")
+    plt.legend()
+    plt.grid()
+    plt.savefig("loss_curve.png")
+    plt.show()

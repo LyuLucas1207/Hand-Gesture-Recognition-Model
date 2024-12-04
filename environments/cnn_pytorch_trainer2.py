@@ -7,6 +7,7 @@ from torch.utils.data import DataLoader, random_split
 from torchvision import datasets, transforms
 from utils.modeltools import pytorch_save_full_model
 from core.CNNPyTorchBuilder import CNNModel, train_model
+import matplotlib.pyplot as plt
 
 def main():
     # Hyperparameters
@@ -22,6 +23,9 @@ def main():
     ])
 
     dataset = datasets.ImageFolder("./data/images", transform=transform)
+
+    print(dataset.class_to_idx)
+
     train_size = int(0.8 * len(dataset))
     val_size = len(dataset) - train_size
     train_dataset, val_dataset = random_split(dataset, [train_size, val_size])
@@ -46,12 +50,15 @@ def main():
         val_loader, 
         criterion, 
         optimizer, 
-        num_epochs = 10,
+        num_epochs = 30,
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     )
 
     # Save the trained model
     pytorch_save_full_model(trained_model, "./models/cnn_model_pytorch.pth")
+
+
+
 
 if __name__ == "__main__":
     main()

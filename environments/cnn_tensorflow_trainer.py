@@ -1,5 +1,3 @@
-# How to run: python -m environments.cnn_tensorflow_trainer
-
 import pickle
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -12,7 +10,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import classification_report
-import numpy as np
+import matplotlib.pyplot as plt
 
 # Load the data
 data_dict = pickle.load(open("./data/data.pickle", "rb"))
@@ -65,7 +63,6 @@ model = Sequential([
     Dense(labels.shape[1], activation="softmax"),
 ])
 
-
 # Compile model
 optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss="categorical_crossentropy", metrics=["accuracy"])
@@ -87,6 +84,17 @@ history = model.fit(
     verbose=1
 )
 
+# Plot loss curves
+plt.figure(figsize=(10, 6))
+plt.plot(history.history["loss"], label="Train Loss")
+plt.plot(history.history["val_loss"], label="Validation Loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.title("Training and Validation Loss")
+plt.legend()
+plt.grid(True)
+plt.show()
+
 # Evaluate model
 loss, accuracy = model.evaluate(x_test, y_test, verbose=0)
 print(f"Final Model Accuracy: {accuracy * 100:.2f}%")
@@ -103,3 +111,4 @@ print(report)
 
 # Save the model
 model.save("./models/cnn_advanced.h5")
+print("Model saved as ./models/cnn_advanced.h5")

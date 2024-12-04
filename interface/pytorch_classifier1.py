@@ -1,4 +1,4 @@
-# How to run: python -m interface.pytorch_classifier
+# How to run: python -m interface.pytorch_classifier1
 
 import cv2
 import numpy as np
